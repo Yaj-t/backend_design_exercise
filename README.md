@@ -1,8 +1,23 @@
+# Table of Contents
+1. [Description](#description)
+2. [Project Structure](#project-structure)
+3. [Installation](#installation)
+4. [Environment Variables](#environment-variables)
+5. [Usage](#usage)
+6. [API Endpoints](#api-endpoints)
+    1. [User Registration](#user-registration)
+    2. [User Login](#user-login)
+    3. [Get User Profile](#get-user-profile)
+7. [Middleware](#middleware)
+8. [Data](#data)
+9. [Utilities](#utilities)
+10. [Schema](#schema)
+11. [License](#license)
+
 ## Description
 This project is a simple backend system designed for user management with JWT-based authentication. It includes user registration, login, and access to protected routes. The backend is built using **Node.js** and **Express**, with **JWT** (JSON Web Token) used to manage user authentication. Passwords are securely hashed using **bcrypt**, and user data is stored in a JSON file for simplicity.
 
 To ensure data integrity and security, **Joi** is used for validating user input, ensuring that only properly formatted data is processed by the system. File operations (e.g., storing and retrieving user data) are handled using **fs-extra**. The authentication middleware ensures that only authenticated users can access protected routes.
-
 
 ## Project Structure
 ```
@@ -27,7 +42,6 @@ backend_design_exercise/
 ├── app.mjs                             # Entry point of the application
 ├── package.json                        # Project dependencies and scripts
 └── README.md                           # Project documentation
-
 ```
 
 ## Installation
@@ -44,25 +58,96 @@ backend_design_exercise/
     npm install
     ```
 
+## Environment Variables
+Define the following environment variables in the `.env` file:
+- `PORT`: Port number for the server
+- `JWT_SECRET`: Secret for JWT
+
 ## Usage
 1. Start the application:
     ```sh
     npm start
     ```
-2. The application will be running on `http://localhost:3000`.
+2. The application will be running on `http://localhost:3000` by default.
 
-## JWT Token Handling
-- When a user successfully logs in, a JWT token will be returned by the /login endpoint.
-- This token should be stored on the front end in a secure location.
-- The JWT token should be included in the request headers for routes that require authentication.
-- Add the token to the Authorization header as follows:
-```sh
-  Authorization: Bearer <your_jwt_token>
+## API Endpoints
+
+### User Registration
+
+**Endpoint**: `/api/users/register`
+
+**Method**: `POST`
+
+**Description**: Registers a new user by validating input, checking for duplicate users, hashing the password, and assigning a unique ID.
+
+**Request Body**:
+
+```json
+{
+  "name": "string",
+  "username": "string",
+  "email": "string",
+  "password": "string",
+  "repeat_password": "string"
+}
 ```
-## Endpoints
-- **User Routes**: Defined in [project/routes/userRoutes.mjs](project/routes/userRoutes.mjs)
-- **User Controller**: Handles user-related logic in [project/controllers/userController.mjs](project/controllers/userController.mjs)
-- **User Model**: Defines the user schema in [project/models/userModel.mjs](project/models/userModel.mjs)
+
+**Response**:
+
+- **201 Created**: User successfully created.
+  - Example: `{ "message": "User created" }`
+- **400 Bad Request**: Validation error or user already exists.
+
+---
+
+### User Login
+
+**Endpoint**: `/api/users/login`
+
+**Method**: `POST`
+
+**Description**: Logs in a user by validating their credentials (email and password), and generates a JWT token for authentication.
+
+**Request Body**:
+
+```json
+{
+  "email": "string",
+  "password": "string"
+}
+```
+
+**Response**:
+
+- **200 OK**: User successfully authenticated.
+  - Example: `{ "token": "string" }`
+- **400 Bad Request**: Invalid credentials.
+
+---
+
+### Get User Profile
+
+**Endpoint**: `/api/users/profile`
+
+**Method**: `GET`
+
+**Description**: Retrieves the profile of the currently authenticated user based on the email stored in the JWT token.
+
+**Headers**:
+
+- `Authorization`: `Bearer <JWT token>`
+
+**Response**:
+
+- **200 OK**: User profile retrieved successfully.
+  - Example: `{ "id": "string", "name": "string", "username": "string", "email": "string" }`
+- **404 Not Found**: User not found.
+
+---
+
+### Notes
+- **Authentication**: The `/api/users/profile` endpoint requires a valid JWT token.
+- **Error Handling**: All endpoints return appropriate status codes and error messages in case of failures.
 
 ## Middleware
 - **Authentication Middleware**: Handles authentication in [project/middlewares/authMiddleware.mjs](project/middlewares/authMiddleware.mjs)
@@ -75,12 +160,7 @@ backend_design_exercise/
 - **Validation**: Utility functions for validation in [project/utils/validation.mjs](project/utils/validation.mjs)
 
 ## Schema
-The user schema is defined in [project/schemas/userSchemas.mjs](project/schemas/userSchemas.mjs). 
-
-## Environment Variables
-Define the following environment variables in the `.env` file:
-- `PORT`: Port number for the server
-- `JWT_SECRET`: Secret for JWT
+The user schema is defined in [project/schemas/userSchemas.mjs](project/schemas/userSchemas.mjs).
 
 ## License
 This project is licensed under the MIT License.
