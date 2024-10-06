@@ -2,8 +2,7 @@ import fs from 'fs-extra'; // A file system utility package for reading/writing 
 import bcrypt from 'bcryptjs'; // A package for hashing passwords securely
 import { v4 as uuidv4 } from 'uuid'; // Generates unique IDs for new users
 
-
-const ROUNDS = 10;
+const path = './project/data/users.json';
 
 /**
  * Retrieves all users from the JSON file.
