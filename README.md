@@ -30,7 +30,8 @@ backend_design_exercise/
 │   │   └── users.json                  # Stores user data in JSON format
 │   ├── middlewares/
 │   │   ├── authMiddleware.mjs          # Middleware for JWT token authentication
-│   │   └── loggingMiddleware.mjs       # Middleware for logging requests
+│   │   ├── loggingMiddleware.mjs       # Middleware for logging requests
+│   │   └── rateLimiterMiddleware.mjs   # Middleware for rate limiting requests
 │   ├── models/
 │   │   └── userModel.mjs               # Manages user data (reading/writing users.json)
 │   ├── routes/
@@ -153,6 +154,7 @@ Define the following environment variables in the `.env` file:
 ## Middleware
 - **Authentication Middleware**: Handles authentication in [project/middlewares/authMiddleware.mjs](project/middlewares/authMiddleware.mjs)
 - **Logging Middleware**: Logs requests in [project/middlewares/loggingMiddleware.mjs](project/middlewares/loggingMiddleware.mjs)
+- **Rate Limiting Middleware**: Limits the number of requests in a given timeframe to prevent abuse. This middleware is defined in [project/middlewares/rateLimiterMiddleware.mjs](project/middlewares/rateLimiterMiddleware.mjs)
 
 ## Data
 - **User Data**: Stored in [project/data/users.json](project/data/users.json)
@@ -175,6 +177,9 @@ The user schema is defined in [project/schemas/userSchemas.mjs](project/schemas/
 ### Logging Middleware
 - The logging middleware (`loggingMiddleware`) logs the HTTP method and URL of each incoming request along with a timestamp. This is useful for debugging and tracking application usage. This middleware is defined in [project/middlewares/loggingMiddleware.mjs](project/middlewares/loggingMiddleware.mjs).
 
+### Rate Limiting
+- The rate limiting middleware (`rateLimiterMiddleware`) is used to limit the number of requests from a single IP address in a given timeframe. This helps prevent abuse and protects the server from excessive requests. The rate limiter is configured with a window of 1 minute (`windowMs: 60000`) and a maximum of 10 requests (`max: 10`). If the limit is exceeded, a response with status code 429 is sent. This middleware is defined in [project/middlewares/rateLimiterMiddleware.mjs](project/middlewares/rateLimiterMiddleware.mjs).
+
 ### User Model and Data Management
 - User data is managed using functions defined in [project/models/userModel.mjs](project/models/userModel.mjs). These functions include:
   - `getUsers()`: Retrieves all users from the JSON file.
@@ -185,7 +190,7 @@ The user schema is defined in [project/schemas/userSchemas.mjs](project/schemas/
 - The application uses **jsonwebtoken** to generate JWT tokens for user authentication. Tokens are signed with a secret key (`JWT_SECRET`) defined in the `.env` file and are set to expire in 1 hour.
 
 ### Password Hashing
-- User passwords are hashed using **bcrypt** to ensure secure storage of passwords.
+- User passwords are hashed using **bcrypt** with a salt round of 10 (`ROUNDS = 10`) to ensure secure storage of passwords.
 
 ### Validation
 - The user registration and login data are validated using **Joi** schemas, which are defined in [project/schemas/userSchemas.mjs](project/schemas/userSchemas.mjs). The `validateRequest` function in [project/utils/validation.mjs](project/utils/validation.mjs) is used to validate incoming data against these schemas.
