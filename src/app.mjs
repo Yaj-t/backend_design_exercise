@@ -1,16 +1,21 @@
-import express from 'express'
-import fs from 'fs';
+import express from 'express';
+import userRoutes from './routes/userRoutes.mjs';
+import loggingMiddleware from './middlewares/loggingMiddleware.mjs';
+import dotenv from 'dotenv';
 
-const Users = JSON.parse(fs.readFileSync('path/to/your/users.json', 'utf8'));
+dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
+// Middlewares
+app.use(express.json());
+app.use(loggingMiddleware);
 
+// Routes
+app.use('/api/users', userRoutes);
+
+// Start server
 app.listen(PORT, () => {
-    console.log(`Example app listening on port ${PORT}`)
-    console.log(`Link: http://localhost:${PORT}`)
-})
+    console.log(`Server running on http://localhost:${PORT}`);
+});
