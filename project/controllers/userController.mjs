@@ -3,12 +3,14 @@ import jwt from 'jsonwebtoken';
 import { createUser, findUserByEmail, findUserByUsername, getUsers } from '../models/userModel.mjs';
 import bcrypt from 'bcryptjs';
 
+
 export const registerUser = async (req, res) => {
     const schema = Joi.object({
         name: Joi.string().required(),
         username: Joi.string().required(),
         email: Joi.string().email().required(),
         password: Joi.string().min(6).required(),
+        repeat_password: Joi.ref('password'),
         role: Joi.string().valid('user', 'admin')
     });
     const { error } = schema.validate(req.body);

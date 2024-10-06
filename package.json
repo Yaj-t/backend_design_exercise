@@ -4,8 +4,8 @@
   "main": "app.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "nodemon ./src/app.mjs",
-    "start": "node ./src/app.mjs"
+    "start:dev": "nodemon ./project/app.mjs",
+    "start": "node ./project/app.mjs"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +14,7 @@
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
+    "express-validator": "^7.2.0",
     "fs-extra": "^11.2.0",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",

@@ -1,7 +1,7 @@
 import fs from 'fs-extra';
 import bcrypt from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
-const path = './data/users.json';
+const path = './project/data/users.json';
 
 const ROUNDS = 10;
 
