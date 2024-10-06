@@ -11,7 +11,8 @@ import jwt from 'jsonwebtoken';
  * @returns {void} Sends a 401 status if no token is provided, a 400 status if the token is invalid, or calls the next middleware if the token is valid.
  */
 const authMiddleware = (req, res, next) => {
-    const token = req.header('Authorization');
+    const authHeader = req.header('Authorization');
+    const token = authHeader.split(' ')[1];
     if (!token) return res.status(401).send('Access denied. No token provided.');
 
     try {
