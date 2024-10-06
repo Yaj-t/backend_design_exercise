@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { createUser, findUserByEmail, findUserByUsername, findUserById } from '../models/userModel.mjs';
 import bcrypt from 'bcryptjs';
-import { validateRequest } from '../utils/validation';
+import { validateRequest } from '../utils/validation.mjs';
 import { userRegistrationSchema, userLoginSchema } from '../schemas/userSchemas.mjs';
 
 /**
