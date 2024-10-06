@@ -23,16 +23,16 @@ export const registerUser = async (req, res) => {
     if (validationErrors) return res.status(400).send(validationErrors);
 
     const userExists = await findUserByEmail(req.body.email);
-    if (userExists) return res.status(400).send('User already exists');
+    if (userExists) return res.status(400).json({ error: 'User already exists' });
 
     const usernameExists = await findUserByUsername(req.body.username);
-    if (usernameExists) return res.status(400).send('Username already taken');
+    if (usernameExists) return res.status(400).send({ error: 'Username already taken' });
 
     const { repeat_password, ...userData } = req.body;
 
     await createUser(userData);
 
-    res.status(201).send('User registered successfully');
+    res.status(201).json({ message: 'User created' });
 };
 
 /**
@@ -53,15 +53,15 @@ export const loginUser = async (req, res) => {
 
 
     const user = await findUserByEmail(req.body.email);
-    if (!user) return res.status(400).send('Invalid credentials');
+    if (!user) return res.status(400).json({ error: 'Invalid credentials' });
 
 
     const validPassword = await bcrypt.compare(req.body.password, user.password);
-    if (!validPassword) return res.status(400).send('Invalid credentials');
+    if (!validPassword) return res.status(400).json({ error: 'Invalid credentials' });
 
     const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    res.send(token);
+    res.json({ token: token });
 };
 
 /**
@@ -77,7 +77,7 @@ export const loginUser = async (req, res) => {
  */
 export const getProfile = async (req, res) => {
     const user = await findUserByEmail(req.user.email);
-    if (!user) return res.status(404).send('User not found');
+    if (!user) return res.status(404).json({ error: 'User not found' });;
 
     res.send({ id: user.id, name: user.name, username: user.username, email: user.email });
 };
