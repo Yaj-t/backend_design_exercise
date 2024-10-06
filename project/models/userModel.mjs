@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs'; // A package for hashing passwords securely
 import { v4 as uuidv4 } from 'uuid'; // Generates unique IDs for new users
 
 const path = './project/data/users.json';
-
+const ROUNDS = 10;
 /**
  * Retrieves all users from the JSON file.
  * @returns {Promise<Array>} A promise that resolves to an array of users.

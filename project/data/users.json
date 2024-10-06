@@ -1,9 +1,1 @@
-[
-    {
-        "name": "test0",
-        "username": "test0",
-        "email": "test0@email.com",
-        "password": "$2a$10$xnL/Z1mw5c8sWG9boFyfhOdQsOQ4WFIaZQBBQqCQLr5R0CS3nEQ5a",
-        "id": "c8eb90af-13e2-4f2e-9069-b97708782d37"
-    }
-]
+[{"name":"test0","username":"test0","email":"test0@email.com","password":"$2a$10$c.Gw/XbkJqOnCU95yb93UeVNw/odCNmLrtwbfXyLl5Nl3V2K6CNwO","id":"94eb4b46-8aa2-4f30-a085-7f2ff47356d1"}]
