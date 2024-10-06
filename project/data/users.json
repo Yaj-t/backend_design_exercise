@@ -1,10 +1,9 @@
 [
     {
-        "username": "somewell",
-        "name": "somewell",
-        "email": "somewell@example.com",
-        "password": "$2a$10$Oa3fC.hC58tgJB/sKZHnF.7nqgVCBP.x35jDtQbu2NpHs7N0AB9J2",
-        "id": "8b33a4b2-a0e6-4344-b37f-cfe245429fab",
-        "role": "user"
+        "name": "test0",
+        "username": "test0",
+        "email": "test0@email.com",
+        "password": "$2a$10$xnL/Z1mw5c8sWG9boFyfhOdQsOQ4WFIaZQBBQqCQLr5R0CS3nEQ5a",
+        "id": "c8eb90af-13e2-4f2e-9069-b97708782d37"
     }
 ]
