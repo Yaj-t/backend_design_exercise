@@ -12,7 +12,8 @@
 8. [Data](#data)
 9. [Utilities](#utilities)
 10. [Schema](#schema)
-11. [License](#license)
+11. [Additional Information](#additional-information)
+12. [License](#license)
 
 ## Description
 This project is a simple backend system designed for user management with JWT-based authentication. It includes user registration, login, and access to protected routes. The backend is built using **Node.js** and **Express**, with **JWT** (JSON Web Token) used to manage user authentication. Passwords are securely hashed using **bcrypt**, and user data is stored in a JSON file for simplicity.
@@ -161,6 +162,33 @@ Define the following environment variables in the `.env` file:
 
 ## Schema
 The user schema is defined in [project/schemas/userSchemas.mjs](project/schemas/userSchemas.mjs).
+
+## Additional Information
+
+### User Registration and Login Logic
+- The `registerUser` function is responsible for registering a new user. It validates the input data using `Joi`, checks for duplicate users by email and username, hashes the password using **bcrypt**, and saves the user to the JSON file. This function is defined in [project/controllers/userController.mjs](project/controllers/userController.mjs).
+- The `loginUser` function handles user login by validating credentials, checking if the email and password match, and generating a JWT token if the credentials are valid. This token is used for subsequent authenticated requests.
+
+### Authentication Middleware
+- The authentication middleware (`authMiddleware`) is responsible for verifying the JWT token. If the token is valid, it attaches the decoded user information to `req.user` and allows access to protected routes. If the token is invalid or missing, it returns an error. This middleware is defined in [project/middlewares/authMiddleware.mjs](project/middlewares/authMiddleware.mjs).
+
+### Logging Middleware
+- The logging middleware (`loggingMiddleware`) logs the HTTP method and URL of each incoming request along with a timestamp. This is useful for debugging and tracking application usage. This middleware is defined in [project/middlewares/loggingMiddleware.mjs](project/middlewares/loggingMiddleware.mjs).
+
+### User Model and Data Management
+- User data is managed using functions defined in [project/models/userModel.mjs](project/models/userModel.mjs). These functions include:
+  - `getUsers()`: Retrieves all users from the JSON file.
+  - `createUser(user)`: Creates a new user by hashing their password, assigning a unique ID, and saving the user to the JSON file.
+  - `findUserByEmail(email)`, `findUserByUsername(username)`, `findUserById(id)`: Functions to find users by their email, username, or ID.
+
+### JWT Token
+- The application uses **jsonwebtoken** to generate JWT tokens for user authentication. Tokens are signed with a secret key (`JWT_SECRET`) defined in the `.env` file and are set to expire in 1 hour.
+
+### Password Hashing
+- User passwords are hashed using **bcrypt** to ensure secure storage of passwords.
+
+### Validation
+- The user registration and login data are validated using **Joi** schemas, which are defined in [project/schemas/userSchemas.mjs](project/schemas/userSchemas.mjs). The `validateRequest` function in [project/utils/validation.mjs](project/utils/validation.mjs) is used to validate incoming data against these schemas.
 
 ## License
 This project is licensed under the MIT License.
