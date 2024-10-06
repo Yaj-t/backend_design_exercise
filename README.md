@@ -1,5 +1,3 @@
-# Project Name
-
 ## Description
 This project is a simple backend system designed for user management with JWT-based authentication. It includes user registration, login, and access to protected routes. The backend is built using **Node.js** and **Express**, with **JWT** (JSON Web Token) used to manage user authentication. Passwords are securely hashed using **bcrypt**, and user data is stored in a JSON file for simplicity.
 
