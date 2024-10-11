@@ -49,7 +49,7 @@ backend_design_exercise/
 ## Installation
 1. Clone the repository:
     ```sh
-    git clone <repository-url>
+    git clone https://github.com/Yaj-t/backend_design_exercise
     ```
 2. Navigate to the project directory:
     ```sh
